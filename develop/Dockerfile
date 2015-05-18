@@ -14,7 +14,7 @@ RUN rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noar
 
 ENV HOME /root
 RUN yum -y update
-RUN yum install -y zsh git tmux openssh-server vim wget tar gcc
+RUN yum install -y zsh git tmux openssh-server vim wget tar gcc ncurses-devel gcc-c++ make automake python-devel
 RUN ssh-keygen -N '' -t rsa -q -f /etc/ssh/ssh_host_rsa_key
 RUN ssh-keygen -N '' -t dsa -q -f /etc/ssh/ssh_host_dsa_key
 RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
@@ -37,6 +37,29 @@ RUN gem install tmuxinator
 WORKDIR /root
 CMD ["/usr/sbin/sshd","-D"]
 
+########## python ##############
+#RUN wget http://www.python.org/ftp/python/2.7.2/Python-2.7.2.tar.bz2
+#RUN tar jxvf Python-2.7.2.tar.bz2
+#RUN cd Python-2.7.2 
+#RUN ./configure --prefix=/usr/local/Python2.7 --enable-shared
+#RUN make && make install
+#RUN echo "/usr/local/Python2.7/lib" > /etc/ld.so.conf.d/python.conf
+#RUN mv /usr/bin/python /usr/bin/python.old
+#RUN ln -s /usr/local/Python2.7/bin/python /usr/bin/python
+#RUN sed -i -E "s/usr\/bin\/python/\/usr\/bin\/python2.6/" /usr/bin/yum
+
 ####### vim #############
-git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim`
+RUN wget ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2
+RUN tar -xjvf vim-7.4.tar.bz2
+RUN cd vim74 
+RUN ./configure --with-features=huge  --enable-multibyte --enable-xim --with-x --enable-pythoninterp=yes --enable-cscope --enable-fontset --with-python-config-dir=/usr/lib64/python2.6/config
+RUN make && make install && rm /usr/bin/vim
+RUN git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+RUN git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim`
+RUN rm /bin/vi;ln -s /usr/local/bin/vim /bin/vi
+
+############ cmake ###########
+RUN wget http://www.cmake.org/files/v3.2/cmake-3.2.2.tar.gz
+RUN tar -xvzf cmake-3.2.2.tar.gz
+RUN cd cmake-3.2.2
+RUN ./bootstrap && gmake & gmake install
