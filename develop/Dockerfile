@@ -21,6 +21,7 @@ RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 RUN echo hello|passwd --stdin root
 RUN sed -i -E "s/UsePAM yes/#UsePAM yes/" /etc/ssh/sshd_config
 RUN sed -i -E "s/#UsePAM no/UsePAM no/" /etc/ssh/sshd_config
+CMD ["/usr/sbin/sshd","-D"]
 
 
 ################## BEGIN INSTALLATION ######################
@@ -35,7 +36,6 @@ RUN gem sources -a http://ruby.taobao.org/
 RUN gem update --system
 RUN gem install tmuxinator
 WORKDIR /root
-CMD ["/usr/sbin/sshd","-D"]
 
 ########## python ##############
 #RUN wget http://www.python.org/ftp/python/2.7.2/Python-2.7.2.tar.bz2
@@ -48,17 +48,32 @@ CMD ["/usr/sbin/sshd","-D"]
 #RUN ln -s /usr/local/Python2.7/bin/python /usr/bin/python
 #RUN sed -i -E "s/usr\/bin\/python/\/usr\/bin\/python2.6/" /usr/bin/yum
 
+################ golang ##################
+#RUN git clone https://github.com/jiatower/docker-images.git
+ADD  go1.4.1.linux-amd64.tar.gz ./
+RUN tar -xzvf go1.4.1.linux-amd64.tar.gz;mv go golang
+RUN cd golang/src;./all.bash
+RUN mv go /usr/local
+RUN mkdir -p go/{src,bin,pkg,conf}
+ADD errcheck godef goimports gorename oracle go/bin
+
 ####### vim #############
 RUN wget ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2
 RUN tar -xjvf vim-7.4.tar.bz2
 RUN cd vim74;./configure --with-features=huge  --enable-multibyte --enable-xim --with-x --enable-pythoninterp=yes --enable-cscope --enable-fontset --with-python-config-dir=/usr/lib64/python2.6/config
-RUN make && make install && rm /usr/bin/vim
+RUN cd vim74;make && make install && rm /usr/bin/vim
 RUN git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-RUN git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim`
+RUN git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 RUN rm /bin/vi;ln -s /usr/local/bin/vim /bin/vi
+RUN git clone https://github.com/jiatower/config-files.git
+RUN ln -s config-files/.vimrc .
+RUN ln -s config-files/.tmuxinator .
+RUN ln -s config-files/.tmux.conf .
+RUN rm .zshrc;ln -s config-files/.zshrc .
+RUN cd .vim/bundle/YouCompleteMe;git submodule update --init --recursive;./install.sh --gocode-completer
 
 ############ cmake ###########
 RUN wget http://www.cmake.org/files/v3.2/cmake-3.2.2.tar.gz
 RUN tar -xvzf cmake-3.2.2.tar.gz
-RUN cd cmake-3.2.2
-RUN ./bootstrap && gmake & gmake install
+RUN cd cmake-3.2.2;./bootstrap && gmake && gmake install
+
