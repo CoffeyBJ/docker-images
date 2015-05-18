@@ -51,8 +51,7 @@ CMD ["/usr/sbin/sshd","-D"]
 ####### vim #############
 RUN wget ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2
 RUN tar -xjvf vim-7.4.tar.bz2
-RUN cd vim74 
-RUN ./configure --with-features=huge  --enable-multibyte --enable-xim --with-x --enable-pythoninterp=yes --enable-cscope --enable-fontset --with-python-config-dir=/usr/lib64/python2.6/config
+RUN cd vim74;./configure --with-features=huge  --enable-multibyte --enable-xim --with-x --enable-pythoninterp=yes --enable-cscope --enable-fontset --with-python-config-dir=/usr/lib64/python2.6/config
 RUN make && make install && rm /usr/bin/vim
 RUN git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 RUN git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim`
