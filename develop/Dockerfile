@@ -50,12 +50,12 @@ WORKDIR /root
 
 ################ golang ##################
 #RUN git clone https://github.com/jiatower/docker-images.git
-ADD  go1.4.1.linux-amd64.tar.gz ./
-RUN tar -xzvf go1.4.1.linux-amd64.tar.gz;mv go golang
-RUN cd golang/src;./all.bash
+COPY go1.4.1.linux-amd64.tar.gz ./
+RUN tar -xzvf go1.4.1.linux-amd64.tar.gz
+RUN cd go/src;./all.bash
 RUN mv go /usr/local
 RUN mkdir -p go/{src,bin,pkg,conf}
-ADD errcheck godef goimports gorename oracle go/bin
+COPY errcheck godef goimports gorename oracle go/bin/
 
 ####### vim #############
 RUN wget ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2
@@ -70,10 +70,13 @@ RUN ln -s config-files/.vimrc .
 RUN ln -s config-files/.tmuxinator .
 RUN ln -s config-files/.tmux.conf .
 RUN rm .zshrc;ln -s config-files/.zshrc .
-RUN cd .vim/bundle/YouCompleteMe;git submodule update --init --recursive;./install.sh --gocode-completer
 
 ############ cmake ###########
 RUN wget http://www.cmake.org/files/v3.2/cmake-3.2.2.tar.gz
 RUN tar -xvzf cmake-3.2.2.tar.gz
 RUN cd cmake-3.2.2;./bootstrap && gmake && gmake install
 
+########## YouCompleteMe ################
+RUN git clone "https://github.com/Valloric/YouCompleteMe.git" .vim/bundle/YouCompleteMe
+RUN cd .vim/bundle/YouCompleteMe;git submodule update --init --recursive
+RUN export GOROOT=/usr/local/go;export PATH=$PATH:/usr/local/go/bin;export;cd .vim/bundle/YouCompleteMe;./install.sh --gocode-completer
