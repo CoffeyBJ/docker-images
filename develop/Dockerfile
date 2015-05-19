@@ -70,6 +70,7 @@ RUN ln -s config-files/.vimrc .
 RUN ln -s config-files/.tmuxinator .
 RUN ln -s config-files/.tmux.conf .
 RUN ln -s config-files/.gitconfig .
+RUN ln -s config-files/.tmuxinator.zsh .
 RUN rm .zshrc;ln -s config-files/.zshrc .
 
 ############ cmake ###########
