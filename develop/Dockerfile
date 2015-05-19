@@ -55,7 +55,7 @@ RUN tar -xzvf go1.4.1.linux-amd64.tar.gz
 RUN cd go/src;./all.bash
 RUN mv go /usr/local
 RUN mkdir -p go/{src,bin,pkg,conf}
-COPY errcheck godef goimports gorename oracle go/bin/
+COPY gocode golint gotags errcheck godef goimports gorename oracle go/bin/
 
 ####### vim #############
 RUN wget ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2
