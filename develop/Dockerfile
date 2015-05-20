@@ -88,4 +88,4 @@ RUN cd cmake-3.2.2;./bootstrap && gmake && gmake install
 ########## YouCompleteMe ################
 RUN git clone "https://github.com/Valloric/YouCompleteMe.git" .vim/bundle/YouCompleteMe
 RUN cd .vim/bundle/YouCompleteMe;git submodule update --init --recursive
-RUN export GOROOT=/usr/local/go;export PATH=$PATH:/usr/local/go/bin;export;cd .vim/bundle/YouCompleteMe;./install.sh --gocode-completer
+RUN ["/bin/bash","-c","-l","cd .vim/bundle/YouCompleteMe;./install.sh --gocode-completer"]
