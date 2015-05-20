@@ -43,6 +43,8 @@ RUN mkdir -p go/{src,bin,pkg,conf}
 COPY gocode golint gotags errcheck godef goimports gorename oracle go/bin/
 RUN ["/bin/bash","-c","-l","go get github.com/go-sql-driver/mysql"]
 RUN git clone "https://github.com/go-yaml/yaml.git" "go/src/gopkg.in/yaml.v2"
+RUN cp -R go/src/gopkg.in/yaml.v2 go/src/gopkg.in/yaml.v1
+RUN cd go/src/gopkg.in/yaml.v1;git checkout -b v1 origin/v1
 
 ################## libevent ###################
 COPY libevent-2.0.22-stable.tar.gz ./
