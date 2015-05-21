@@ -15,9 +15,10 @@ RUN rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noar
 
 ENV HOME /root
 RUN yum -y update
-RUN yum install -y zsh which git openssh-server wget tar gcc ncurses-devel gcc-c++ make automake python-devel
+RUN yum install -y zsh which git openssh-server wget tar ntp ntpdate mysql gcc ncurses-devel gcc-c++ make automake python-devel
 RUN ssh-keygen -N '' -t rsa -q -f /etc/ssh/ssh_host_rsa_key
 RUN ssh-keygen -N '' -t dsa -q -f /etc/ssh/ssh_host_dsa_key
+RUN echo "TZ='Asia/Shanghai'; export TZ" >> /etc/profile
 RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 RUN echo hello|passwd --stdin root
 RUN sed -i -E "s/UsePAM yes/#UsePAM yes/" /etc/ssh/sshd_config
@@ -31,8 +32,8 @@ RUN ln -s config-files/.tmuxinator .
 RUN ln -s config-files/.tmux.conf .
 RUN ln -s config-files/.gitconfig .
 RUN ln -s config-files/.tmuxinator.zsh .
-RUN rm -f .zshrc;ln -s config-files/.zshrc .
-RUN rm -f .bashrc;ln -s config-files/.bashrc .
+RUN mv .zshrc .zshrc.old;ln -s config-files/.zshrc .
+RUN mv .bashrc .bashrc.old;ln -s config-files/.bashrc .
 
 ################ golang ##################
 COPY go1.4.1.linux-amd64.tar.gz ./
