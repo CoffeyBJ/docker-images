@@ -15,7 +15,7 @@ RUN rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noar
 
 ENV HOME /root
 RUN yum -y update
-RUN yum install -y zsh which git openssh-server wget tar ntp ntpdate mysql gcc ncurses-devel gcc-c++ make automake python-devel
+RUN yum install -y zsh which git openssh-server wget tar ntp ntpdate mysql gcc ncurses-devel gcc-c++ make automake python-devel ctags
 RUN ssh-keygen -N '' -t rsa -q -f /etc/ssh/ssh_host_rsa_key
 RUN ssh-keygen -N '' -t dsa -q -f /etc/ssh/ssh_host_dsa_key
 RUN echo "TZ='Asia/Shanghai'; export TZ" >> /etc/profile
