@@ -32,7 +32,8 @@ RUN ln -s config-files/.tmuxinator .
 RUN ln -s config-files/.tmux.conf .
 RUN ln -s config-files/.gitconfig .
 RUN ln -s config-files/.tmuxinator.zsh .
-RUN mv .zshrc .zshrc.old;ln -s config-files/.zshrc .
+RUN mv .zshrc .zshrc.old
+RUN ln -s config-files/.zshrc .
 RUN mv .bashrc .bashrc.old;ln -s config-files/.bashrc .
 
 ################ golang ##################
@@ -81,6 +82,12 @@ RUN cd vim74;./configure --with-features=huge  --enable-multibyte --enable-xim -
 RUN cd vim74;make && make install
 RUN git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 RUN git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+RUN git clone "https://github.com/SirVer/ultisnips.git" ~/.vim/bundle/ultisnips
+RUN git clone "https://github.com/tpope/vim-fugitive.git" ~/.vim/bundle/vim-fugitive
+RUN git clone "https://github.com/majutsushi/tagbar.git" ~/.vim/bundle/tagbar
+RUN git clone "https://github.com/fatih/vim-go.git" ~/.vim/bundle/vim-go
+RUN git clone "https://github.com/bling/vim-airline.git" ~/.vim/bundle/vim-airline
+RUN git clone "https://github.com/fannheyward/rainbow_parentheses.vim.git" ~/.vim/bundle/rainbow_parentheses.vim
 RUN rm /bin/vi;ln -s /usr/local/bin/vim /bin/vi
 
 ############ cmake ###########
