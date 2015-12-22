@@ -36,8 +36,8 @@ RUN ln -s config-files/.zshrc .
 RUN mv .bashrc .bashrc.old;ln -s config-files/.bashrc .
 
 ################ golang ##################
-COPY go1.4.1.linux-amd64.tar.gz ./
-RUN tar -xzvf go1.4.1.linux-amd64.tar.gz
+COPY go1.5.2.linux-amd64.tar.gz ./
+RUN tar -xzvf go1.5.2.linux-amd64.tar.gz
 RUN cd go/src;./all.bash
 RUN mv go /usr/local
 RUN mkdir -p go/{src,bin,pkg,conf}
@@ -65,7 +65,7 @@ RUN \curl -sSL https://get.rvm.io |bash -s stable --ruby
 RUN echo "source /etc/profile" >> /etc/zprofile
 RUN ["/bin/bash","-c","-l","rvm use 2.2.1"]
 RUN ["/bin/bash","-c","-l","gem sources --remove https://rubygems.org/"]
-RUN ["/bin/bash","-c","-l","gem sources -a http://ruby.taobao.org/"]
+RUN ["/bin/bash","-c","-l","gem sources -a https://ruby.taobao.org/"]
 RUN ["/bin/bash","-c","-l","gem install tmuxinator"]
 
 ################## BEGIN INSTALLATION ######################
