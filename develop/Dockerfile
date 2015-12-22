@@ -62,8 +62,8 @@ RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A170311380
 RUN \curl -sSL https://get.rvm.io |bash -s stable --ruby
 RUN echo "source /etc/profile" >> /etc/zprofile
 RUN ["/bin/bash","-c","-l","rvm use 2.2.1"]
-RUN ["/bin/bash","-c","-l","gem sources --remove https://rubygems.org/"]
-RUN ["/bin/bash","-c","-l","gem sources -a https://ruby.taobao.org/"]
+#RUN ["/bin/bash","-c","-l","gem sources --remove https://rubygems.org/"]
+#RUN ["/bin/bash","-c","-l","gem sources -a https://ruby.taobao.org/"]
 RUN ["/bin/bash","-c","-l","gem install tmuxinator"]
 
 ################## BEGIN INSTALLATION ######################
