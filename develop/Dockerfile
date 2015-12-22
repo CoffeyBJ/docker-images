@@ -32,7 +32,6 @@ RUN ln -s config-files/.tmuxinator .
 RUN ln -s config-files/.tmux.conf .
 RUN ln -s config-files/.gitconfig .
 RUN ln -s config-files/.tmuxinator.zsh .
-RUN mv .zshrc .zshrc.old
 RUN ln -s config-files/.zshrc .
 RUN mv .bashrc .bashrc.old;ln -s config-files/.bashrc .
 
