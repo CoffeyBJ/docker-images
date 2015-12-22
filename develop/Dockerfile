@@ -37,9 +37,7 @@ RUN mv .bashrc .bashrc.old;ln -s config-files/.bashrc .
 
 ################ golang ##################
 COPY go1.5.2.linux-amd64.tar.gz ./
-RUN tar -xzvf go1.5.2.linux-amd64.tar.gz
-RUN cd go/src;./all.bash
-RUN mv go /usr/local
+RUN tar -C /usr/local -xzvf go1.5.2.linux-amd64.tar.gz
 RUN mkdir -p go/{src,bin,pkg,conf}
 COPY gocode golint gotags errcheck godef goimports gorename oracle go/bin/
 RUN ["/bin/bash","-c","-l","go get github.com/go-sql-driver/mysql"]
