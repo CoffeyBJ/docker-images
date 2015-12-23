@@ -68,9 +68,9 @@ RUN ["/bin/bash","-c","-l","gem install tmuxinator"]
 
 ################## BEGIN INSTALLATION ######################
 RUN git clone git://github.com/bwithem/oh-my-zsh.git ~/.oh-my-zsh \
-    && cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc \
+#    && cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc \
     && chsh -s /bin/zsh
-RUN sed -i -E "s/^plugins=\((.*)\)$/plugins=(\1 tmux themes tmuxinator)/" ~/.zshrc
+#RUN sed -i -E "s/^plugins=\((.*)\)$/plugins=(\1 tmux themes tmuxinator)/" ~/.zshrc
 
 ####### vim #############
 COPY vim-7.4.tar.bz2 ./
@@ -80,6 +80,7 @@ RUN cd vim74;make && make install
 RUN git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 RUN git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 RUN git clone "https://github.com/SirVer/ultisnips.git" ~/.vim/bundle/ultisnips
+RUN git clone "https://github.com/motemen/git-vim.git" ~/.vim/bundle/git-vim
 RUN git clone "https://github.com/tpope/vim-fugitive.git" ~/.vim/bundle/vim-fugitive
 RUN git clone "https://github.com/majutsushi/tagbar.git" ~/.vim/bundle/tagbar
 RUN git clone "https://github.com/fatih/vim-go.git" ~/.vim/bundle/vim-go
